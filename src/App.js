@@ -1,35 +1,38 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Canvas } from "react-three-fiber";
-import { Sky, PointerLockControls, Stars } from "@react-three/drei";
-import { useGLTF } from "@react-three/drei/useGLTF";
-import { Physics } from "@react-three/cannon";
-import Ground from "./components/Ground";
-import Player from "./components/Player";
+import { OrbitControls, Sky } from "@react-three/drei";
 
-const Model = () => {
-  const gltf = useGLTF("/stage.gltf", true);
-  return <primitive object={gltf.scene} dispose={null} />;
+const Monolith = () => {
+  return (
+    <mesh position={[0, 2, 0]}>
+      <boxBufferGeometry args={[0.25, 4, 2.25]} />
+      <meshStandardMaterial
+        attach="material"
+        color="green"
+        roughness={0.1}
+        metalness={1}
+      />
+    </mesh>
+  );
 };
 
 function App() {
   return (
     <>
-      <Canvas shadowMap gl={{ alpha: false }} camera={{ fov: 35 }}>
-        {/* <Sky sunPosition={[-100, 0, -10]} /> */}
-        <Stars fade={true} />
-        <ambientLight intensity={0.05} />
-        <pointLight castShadow intensity={0.8} position={[100, 100, 100]} />
-        <Physics gravity={[0, -30, 0]}>
-          <Suspense fallback={null}>
-            <mesh position={[0, 0, 0]}>
-              <Model />
-            </mesh>
-          </Suspense>
-
-          <Ground />
-          <Player />
-        </Physics>
-        <PointerLockControls />
+      <Canvas camera={{ fov: 35 }}>
+        <OrbitControls />
+        <ambientLight />
+        <Sky
+          turbidity={20}
+          azimuth={0}
+          rayleigh={0.7}
+          mieCoefficient={0.05}
+          mieDirectionalG={0.7}
+          inclination={0.5}
+        />
+        <Monolith />
+        <axesHelper args={[10]} />
+        <gridHelper />
       </Canvas>
     </>
   );
