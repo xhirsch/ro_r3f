@@ -1,8 +1,10 @@
+import * as THREE from "three";
 import { Html, OrbitControls } from "@react-three/drei";
 import React from "react";
 import { Canvas, useLoader } from "react-three-fiber";
 import styled from "styled-components";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
+import img from "../images/cover_diffuse.jpg";
 
 const Wrapper = styled.section`
   position: relative;
@@ -46,13 +48,13 @@ function Iframe(props) {
 }
 
 const Bandcamp = () => {
-  const cover = useLoader(TextureLoader, "textures/cover_diffuse.jpg");
+  const texture = useLoader(THREE.TextureLoader, img);
   return (
     <Wrapper>
       <StyledCanvas>
         <mesh>
-          <boxBufferGeometry attach="geometry" args={[3, 3, 3]} />
-          <meshStandardMaterial map={cover} attach="material" />
+          <planeBufferGeometry attach="geometry" args={[5, 5]} />
+          <meshBasicMaterial attach="material" map={texture} />
           <Html>
             <IFrameOuter>
               <IFrameInner>
