@@ -1,12 +1,13 @@
-import React, { useRef } from "react";
-import { Canvas, useFrame } from "react-three-fiber";
-import { OrbitControls, Sky, softShadows } from "@react-three/drei";
+import * as THREE from "three";
+import React, { Suspense, useRef } from "react";
+import { Canvas, useLoader } from "react-three-fiber";
+import { OrbitControls, softShadows, Stats } from "@react-three/drei";
+import img_floor from "../images/uvgrid.png";
 
 softShadows();
 
 const Monolith = () => {
   const mesh = useRef(null);
-  // useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
   return (
     <mesh castShadow ref={mesh} position={[0, 2, 0]}>
       <boxBufferGeometry attach="geometry" args={[0.25, 4, 2.25]} />
@@ -16,10 +17,26 @@ const Monolith = () => {
 };
 
 const Floor = () => {
+  const texture = useLoader(THREE.TextureLoader, img_floor);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  const repeatValue = 25;
+  texture.repeat.x = repeatValue;
+  texture.repeat.y = repeatValue;
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[100, 100]} />
+      <planeBufferGeometry attach="geometry" args={[150, 150]} />
       <shadowMaterial attach="material" opacity={0.3} />
+      <meshBasicMaterial attach="material" map={texture} />
+    </mesh>
+  );
+};
+
+const ShadowFloor = () => {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+      <planeBufferGeometry attach="geometry" args={[150, 150]} />
+      <shadowMaterial attach="material" opacity={0.7} />
     </mesh>
   );
 };
@@ -32,7 +49,7 @@ const LandingPage = () => {
         colorManagement
         camera={{ position: [-10, 5, 0], fov: 50 }}
       >
-        <OrbitControls autoRotate={true} enablePan={false} enableZoom={false} />
+        <Stats />
         <directionalLight
           castShadow
           position={[-5, 10, 0]}
@@ -46,18 +63,21 @@ const LandingPage = () => {
           shadow-camera-bottom={-10}
         />
         <ambientLight intensity={0.3} />
-        {/* <Sky
-          turbidity={20}
-          azimuth={0}
-          rayleigh={0.7}
-          mieCoefficient={0.05}
-          mieDirectionalG={0.7}
-          inclination={0.5}
-        /> */}
         <Monolith />
-        <Floor />
+        <Suspense fallback={null}>
+          <Floor />
+          <ShadowFloor />
+        </Suspense>
         <axesHelper args={[10]} />
-        <gridHelper />
+        <OrbitControls
+          autoRotate={true}
+          autoRotateSpeed={0.5}
+          rotateSpeed={0.2}
+          enablePan={false}
+          enableZoom={false}
+          maxPolarAngle={Math.PI / 2.5}
+        />
+        <fog attach="fog" args={["white", 5, 20]} />
       </Canvas>
     </>
   );
