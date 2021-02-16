@@ -49,7 +49,6 @@ const LandingPage = () => {
         colorManagement
         camera={{ position: [-10, 5, 0], fov: 50 }}
       >
-        <Stats />
         <directionalLight
           castShadow
           position={[-5, 10, 0]}

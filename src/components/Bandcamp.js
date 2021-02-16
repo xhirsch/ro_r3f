@@ -10,6 +10,7 @@ const Wrapper = styled.section`
   position: relative;
   width: 100%;
   height: 100%;
+  border: 2px solid red;
 `;
 
 const StyledCanvas = styled(Canvas)`
@@ -32,6 +33,7 @@ const IFrameOuter = styled.div`
 
 const IFrameInner = styled.div`
   position: absolute;
+  border: 2px solid black;
 `;
 
 const embeddedCode = {
