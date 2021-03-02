@@ -1,12 +1,16 @@
 import * as THREE from "three";
-import React, { Suspense, useRef } from "react";
-import { Canvas, useLoader } from "react-three-fiber";
+import React, { Suspense, useRef, useEffect, useCallback } from "react";
+import { Canvas, useLoader, useFrame, useThree } from "react-three-fiber";
 import {
+  FlyControls,
   OrbitControls,
+  PointerLockControls,
   softShadows,
-  Stats,
-  Environment,
+  Text,
 } from "@react-three/drei";
+import { a } from "@react-spring/three";
+import Scroll from "./Scroll";
+
 import img_floor from "../images/CalibrationFloorDiffuse.jpg";
 
 softShadows();
@@ -20,6 +24,24 @@ const Monolith = () => {
     </mesh>
   );
 };
+
+function Camera(props) {
+  const [y] = Scroll([-100, 150], { domTarget: window });
+  const [x] = Scroll([-100, 2000], { domTarget: window });
+  const ref = useRef();
+  const { setDefaultCamera } = useThree();
+  useEffect(() => void setDefaultCamera(ref.current), []);
+  useFrame(() => ref.current.updateMatrixWorld());
+  return (
+    <a.perspectiveCamera
+      ref={ref}
+      {...props}
+      position-y={y.to((y) => (y / 500) * 25)}
+      // position-x={x.to((x) => (x / 500) * 25)}
+      rotation-y={x.to((x) => (x / 1000) * Math.PI * 5)}
+    />
+  );
+}
 
 const Floor = () => {
   const texture = useLoader(THREE.TextureLoader, img_floor);
@@ -52,8 +74,9 @@ const LandingPage = () => {
       <Canvas
         shadowMap
         colorManagement
-        camera={{ position: [-10, 5, 0], fov: 50 }}
+        camera={{ position: [-15, 10, 0], fov: 50 }}
       >
+        {/* <Camera position={[-10, 3, 0]} /> */}
         <directionalLight
           castShadow
           position={[-5, 10, 0]}
@@ -68,20 +91,42 @@ const LandingPage = () => {
         />
         <ambientLight intensity={0.3} />
         <Monolith />
+        <Text
+          position={[2, 4, 0]}
+          color="black"
+          rotation={[0, Math.PI / -2, 0]}
+          fontSize={0.5}
+          maxWidth={10}
+          lineHeight={1}
+          letterSpacing={0.02}
+          textAlign={"left"}
+        >
+          Random Orchestra is the vision of media artist Xaver Hirsch and music
+          producer Oliver Gehrmann, that unites atmospherical electronic music
+          with sophisticated visualization. They blend organic textures with
+          melancholic melodies, dreamy pads with distorted percussions and dark
+          pop layers to create a cinematic utopia, both visual and auditory.
+          Influenced by artists like Shlohmo, Bonobo, Moderat and Mount Kimbie
+          they search for their own place within the genre-bending twilight of
+          abstract hip-hop, ambient, electronic music and organic visual
+          weirdness.
+        </Text>
         <Suspense fallback={null}>
           <Floor />
           <ShadowFloor />
         </Suspense>
         <axesHelper args={[10]} />
+        {/* <FlyControls />
+        <PointerLockControls /> */}
         <OrbitControls
-          autoRotate={true}
-          autoRotateSpeed={0.5}
-          rotateSpeed={0.2}
-          enablePan={false}
-          enableZoom={false}
-          maxPolarAngle={Math.PI / 2.5}
+          enablePan={true}
+          enableZoom={true}
+          minDistance={3}
+          maxDistance={25}
+          minPolarAngle={Math.PI / 4}
+          maxPolarAngle={Math.PI / 2 - 0.1}
         />
-        <fog attach="fog" args={["white", 5, 20]} />
+        <fog attach="fog" args={["white", 5, 80]} />
       </Canvas>
     </>
   );
