@@ -1,16 +1,16 @@
 import * as THREE from "three";
-import { Html, OrbitControls } from "@react-three/drei";
-import React from "react";
-import { Canvas, useLoader } from "react-three-fiber";
+import { Html, OrbitControls, Environment } from "@react-three/drei";
+import React, { Suspense, useEffect } from "react";
+import { Canvas, useLoader, useThree } from "react-three-fiber";
 import styled from "styled-components";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import img from "../images/cover_diffuse.jpg";
+import { HDRCubeTextureLoader } from "three/examples/jsm/loaders/HDRCubeTextureLoader";
+import img from "../images/cover_inhale.jpg";
 
 const Wrapper = styled.section`
   position: relative;
   width: 100%;
   height: 100%;
-  border: 2px solid red;
 `;
 
 const StyledCanvas = styled(Canvas)`
@@ -33,7 +33,7 @@ const IFrameOuter = styled.div`
 
 const IFrameInner = styled.div`
   position: absolute;
-  border: 2px solid black;
+  // border: 2px solid black;
 `;
 
 const embeddedCode = {
@@ -55,16 +55,34 @@ const Bandcamp = () => {
     <Wrapper>
       <StyledCanvas>
         <mesh>
-          <planeBufferGeometry attach="geometry" args={[5, 5]} />
+          <planeBufferGeometry attach="geometry" args={[10, 10]} />
           <meshBasicMaterial attach="material" map={texture} />
-          <Html>
+          {/* <Html>
             <IFrameOuter>
               <IFrameInner>
                 <Iframe iframe={embeddedCode["bandcamp"]} allow="autoplay" />
               </IFrameInner>
             </IFrameOuter>
-          </Html>
+          </Html> */}
         </mesh>
+        <Suspense fallback={null}>
+          <Environment
+            background={true}
+            files={[
+              "negx.jpg",
+              "negyjpg",
+              "negz.jpg",
+              "posx.jpg",
+              "posy.jpg",
+              "posz.jpg",
+            ]}
+            path={"/hdr/"}
+          />
+          <mesh>
+            <torusKnotBufferGeometry args={[1, 0.5, 128, 32]} />
+            <meshStandardMaterial metalness={1} roughness={0} />
+          </mesh>
+        </Suspense>
         <OrbitControls enableZoom={false} />
       </StyledCanvas>
     </Wrapper>

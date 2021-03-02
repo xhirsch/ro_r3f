@@ -1,7 +1,12 @@
 import * as THREE from "three";
 import React, { Suspense, useRef } from "react";
 import { Canvas, useLoader } from "react-three-fiber";
-import { OrbitControls, softShadows, Stats } from "@react-three/drei";
+import {
+  OrbitControls,
+  softShadows,
+  Stats,
+  Environment,
+} from "@react-three/drei";
 import img_floor from "../images/uvgrid.png";
 
 softShadows();
