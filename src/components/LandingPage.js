@@ -12,6 +12,7 @@ import { a } from "@react-spring/three";
 import Scroll from "./Scroll";
 
 import img_floor from "../images/CalibrationFloorDiffuse.jpg";
+import Model from "./Figures_for_web";
 
 softShadows();
 
@@ -90,9 +91,9 @@ const LandingPage = () => {
           shadow-camera-bottom={-10}
         />
         <ambientLight intensity={0.3} />
-        <Monolith />
+        {/* <Monolith /> */}
         <Text
-          position={[2, 4, 0]}
+          position={[-2, 3.5, 0]}
           color="black"
           rotation={[0, Math.PI / -2, 0]}
           fontSize={0.5}
@@ -112,6 +113,7 @@ const LandingPage = () => {
           weirdness.
         </Text>
         <Suspense fallback={null}>
+          <Model rotation={[0, -Math.PI / 2, 0]} scale={[2, 2, 2]} />
           <Floor />
           <ShadowFloor />
         </Suspense>
@@ -123,7 +125,8 @@ const LandingPage = () => {
           enableZoom={true}
           minDistance={3}
           maxDistance={25}
-          minPolarAngle={Math.PI / 4}
+          minPolarAngle={0}
+          // maxPolarAngle={Math.PI / 2 - 0.1}
           maxPolarAngle={Math.PI / 2 - 0.1}
         />
         <fog attach="fog" args={["white", 5, 80]} />

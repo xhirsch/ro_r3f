@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.section`
   height: 50px;
   width: 100%;
-  background: yellow;
+  background: #ffee7d;
   position: fixed;
   left: 0;
   bottom: 0;
