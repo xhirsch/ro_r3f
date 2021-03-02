@@ -1,11 +1,16 @@
 import * as THREE from "three";
 import React, { Suspense, useRef, useEffect, useCallback } from "react";
 import { Canvas, useLoader, useFrame, useThree } from "react-three-fiber";
+import styled from "styled-components";
+
 import {
+  Box,
   FlyControls,
+  HTML,
   OrbitControls,
   PointerLockControls,
   softShadows,
+  Sphere,
   Text,
 } from "@react-three/drei";
 import { a } from "@react-spring/three";
@@ -15,6 +20,13 @@ import img_floor from "../images/CalibrationFloorDiffuse.jpg";
 import Model from "./Figures_for_web";
 
 softShadows();
+
+const Wrapper = styled.div`
+  height: 100vh;
+  @media (max-width: 850px) {
+    height 80vh;
+  }
+`;
 
 const Monolith = () => {
   const mesh = useRef(null);
@@ -71,11 +83,11 @@ const ShadowFloor = () => {
 
 const LandingPage = () => {
   return (
-    <>
+    <Wrapper>
       <Canvas
         shadowMap
         colorManagement
-        camera={{ position: [-15, 10, 0], fov: 50 }}
+        camera={{ position: [-15, 20, 0], fov: 50 }}
       >
         {/* <Camera position={[-10, 3, 0]} /> */}
         <directionalLight
@@ -93,11 +105,11 @@ const LandingPage = () => {
         <ambientLight intensity={0.3} />
         {/* <Monolith /> */}
         <Text
-          position={[-2, 3.5, 0]}
+          position={[-2, 6.6, 0]}
           color="black"
           rotation={[0, Math.PI / -2, 0]}
           fontSize={0.5}
-          maxWidth={10}
+          maxWidth={6}
           lineHeight={1}
           letterSpacing={0.02}
           textAlign={"left"}
@@ -113,25 +125,23 @@ const LandingPage = () => {
           weirdness.
         </Text>
         <Suspense fallback={null}>
-          <Model rotation={[0, -Math.PI / 2, 0]} scale={[2, 2, 2]} />
+          <Model rotation={[0, -Math.PI / 2, 0]} scale={[2, 2, 2]}></Model>
           <Floor />
           <ShadowFloor />
         </Suspense>
         <axesHelper args={[10]} />
-        {/* <FlyControls />
-        <PointerLockControls /> */}
         <OrbitControls
           enablePan={true}
           enableZoom={true}
           minDistance={3}
-          maxDistance={25}
+          maxDistance={35}
           minPolarAngle={0}
-          // maxPolarAngle={Math.PI / 2 - 0.1}
           maxPolarAngle={Math.PI / 2 - 0.1}
+          target={[0, 0, 0]}
         />
         <fog attach="fog" args={["white", 5, 80]} />
       </Canvas>
-    </>
+    </Wrapper>
   );
 };
 

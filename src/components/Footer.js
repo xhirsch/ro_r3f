@@ -57,6 +57,7 @@ const Footer = () => {
     <Wrapper>
       <Content>
         <ContentLeft>
+          <List>&#8595;</List>
           <List>
             <a
               href="https://www.instagram.com/random_orchestra/"
@@ -84,7 +85,7 @@ const Footer = () => {
               Soundcloud
             </a>
           </List>
-          <List>|</List>
+          <List>&#8595;</List>
           <List>
             <a
               href="https://www.instagram.com/random_orchestra/"
