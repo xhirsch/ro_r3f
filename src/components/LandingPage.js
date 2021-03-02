@@ -7,7 +7,7 @@ import {
   Stats,
   Environment,
 } from "@react-three/drei";
-import img_floor from "../images/uvgrid.png";
+import img_floor from "../images/CalibrationFloorDiffuse.jpg";
 
 softShadows();
 
@@ -25,7 +25,7 @@ const Floor = () => {
   const texture = useLoader(THREE.TextureLoader, img_floor);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
-  const repeatValue = 25;
+  const repeatValue = 10;
   texture.repeat.x = repeatValue;
   texture.repeat.y = repeatValue;
   return (

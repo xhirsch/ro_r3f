@@ -68,7 +68,7 @@ const Footer = () => {
           </List>
           <List>
             <a
-              href="https://www.instagram.com/random_orchestra/"
+              href="https://www.youtube.com/channel/UCWJH-zDBrnO95iQqASi6h9A"
               target="_blank"
               rel="noreferrer"
             >
@@ -77,20 +77,21 @@ const Footer = () => {
           </List>
           <List>
             <a
-              href="https://www.instagram.com/random_orchestra/"
+              href="https://soundcloud.com/random-orchestra"
               target="_blank"
               rel="noreferrer"
             >
               Soundcloud
             </a>
           </List>
+          <List>|</List>
           <List>
             <a
               href="https://www.instagram.com/random_orchestra/"
               target="_blank"
               rel="noreferrer"
             >
-              Twitter
+              PressKit
             </a>
           </List>
         </ContentLeft>
