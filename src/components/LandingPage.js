@@ -1,20 +1,14 @@
 import * as THREE from "three";
-import React, { Suspense, useRef, useEffect, useCallback } from "react";
-import { Canvas, useLoader, useFrame, useThree } from "react-three-fiber";
+import React, { Suspense } from "react";
+import { Canvas, useLoader } from "react-three-fiber";
 import styled from "styled-components";
 
 import {
-  Box,
   FlyControls,
-  HTML,
   OrbitControls,
-  PointerLockControls,
   softShadows,
-  Sphere,
   Text,
 } from "@react-three/drei";
-import { a } from "@react-spring/three";
-import Scroll from "./Scroll";
 
 import img_floor from "../images/CalibrationFloorDiffuse.jpg";
 import Model from "./Figures_for_web";
@@ -27,34 +21,6 @@ const Wrapper = styled.div`
     height 80vh;
   }
 `;
-
-const Monolith = () => {
-  const mesh = useRef(null);
-  return (
-    <mesh castShadow ref={mesh} position={[0, 2, 0]}>
-      <boxBufferGeometry attach="geometry" args={[0.25, 4, 2.25]} />
-      <meshStandardMaterial attach="material" color="yellow" />
-    </mesh>
-  );
-};
-
-function Camera(props) {
-  const [y] = Scroll([-100, 150], { domTarget: window });
-  const [x] = Scroll([-100, 2000], { domTarget: window });
-  const ref = useRef();
-  const { setDefaultCamera } = useThree();
-  useEffect(() => void setDefaultCamera(ref.current), []);
-  useFrame(() => ref.current.updateMatrixWorld());
-  return (
-    <a.perspectiveCamera
-      ref={ref}
-      {...props}
-      position-y={y.to((y) => (y / 500) * 25)}
-      // position-x={x.to((x) => (x / 500) * 25)}
-      rotation-y={x.to((x) => (x / 1000) * Math.PI * 5)}
-    />
-  );
-}
 
 const Floor = () => {
   const texture = useLoader(THREE.TextureLoader, img_floor);
