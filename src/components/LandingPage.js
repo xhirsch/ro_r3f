@@ -105,24 +105,24 @@ const LandingPage = () => {
         <ambientLight intensity={0.3} />
         {/* <Monolith /> */}
         <Text
-          position={[-2, 6.6, 0]}
+          position={[-2, 5.5, 0]}
           color="black"
           rotation={[0, Math.PI / -2, 0]}
           fontSize={0.5}
-          maxWidth={6}
+          maxWidth={8.01}
           lineHeight={1}
           letterSpacing={0.02}
-          textAlign={"left"}
+          textAlign={"justify"}
         >
-          Random Orchestra is the vision of media artist Xaver Hirsch and music
-          producer Oliver Gehrmann, that unites atmospherical electronic music
-          with sophisticated visualization. They blend organic textures with
-          melancholic melodies, dreamy pads with distorted percussions and dark
-          pop layers to create a cinematic utopia, both visual and auditory.
-          Influenced by artists like Shlohmo, Bonobo, Moderat and Mount Kimbie
-          they search for their own place within the genre-bending twilight of
-          abstract hip-hop, ambient, electronic music and organic visual
-          weirdness.
+          Random Orchestra is the audio- visual vision of media artist Xaver
+          Hirsch and music producer Oliver Gehrmann, that unites atmospher- ical
+          electronic music with sophis- ticated visualization. Influenced by
+          artists like Apparat, Tokimonsta and Alva Noto, they find their home
+          in the genre-bending twilight of abstract hip-hop, ambient, elec-
+          tronic music and organic visual weirdness. They focus on a close link
+          between live visualizations through recordings from the mi- croscope,
+          3D renderings and cre- ative coding, and music char- acterised by
+          dreamy synthesizers, multi-layered organic beats and field recordings.
         </Text>
         <Suspense fallback={null}>
           <Model rotation={[0, -Math.PI / 2, 0]} scale={[2, 2, 2]}></Model>
@@ -139,6 +139,7 @@ const LandingPage = () => {
           maxPolarAngle={Math.PI / 2 - 0.1}
           target={[0, 0, 0]}
         />
+        <FlyControls movementSpeed={8} />
         <fog attach="fog" args={["white", 5, 80]} />
       </Canvas>
     </Wrapper>
