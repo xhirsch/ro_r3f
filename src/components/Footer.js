@@ -88,7 +88,7 @@ const Footer = () => {
           <List>&#8595;</List>
           <List>
             <a
-              href="https://www.instagram.com/random_orchestra/"
+              href="https://www.dropbox.com/s/yekax4xxky42yce/PressKit.zip?dl=0"
               target="_blank"
               rel="noreferrer"
             >
