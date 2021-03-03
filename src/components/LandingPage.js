@@ -26,12 +26,12 @@ const Floor = () => {
   const texture = useLoader(THREE.TextureLoader, img_floor);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
-  const repeatValue = 10;
+  const repeatValue = 6;
   texture.repeat.x = repeatValue;
   texture.repeat.y = repeatValue;
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[150, 150]} />
+      <planeBufferGeometry attach="geometry" args={[75, 75]} />
       <shadowMaterial attach="material" opacity={0.3} />
       <meshBasicMaterial attach="material" map={texture} />
     </mesh>
@@ -41,7 +41,7 @@ const Floor = () => {
 const ShadowFloor = () => {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[150, 150]} />
+      <planeBufferGeometry attach="geometry" args={[75, 75]} />
       <shadowMaterial attach="material" opacity={0.7} />
     </mesh>
   );
@@ -69,7 +69,6 @@ const LandingPage = () => {
           shadow-camera-bottom={-10}
         />
         <ambientLight intensity={0.3} />
-        {/* <Monolith /> */}
         <Text
           position={[-2, 5.5, 0]}
           color="black"
@@ -106,7 +105,7 @@ const LandingPage = () => {
           target={[0, 0, 0]}
         />
         <FlyControls movementSpeed={8} />
-        <fog attach="fog" args={["white", 5, 80]} />
+        <fog attach="fog" args={["white", 20, 50]} />
       </Canvas>
     </Wrapper>
   );
